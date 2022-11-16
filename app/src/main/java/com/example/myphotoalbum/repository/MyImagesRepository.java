@@ -9,11 +9,17 @@ import com.example.myphotoalbum.database.MyImagesDAO;
 import com.example.myphotoalbum.database.MyImagesDatabase;
 
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class MyImagesRepository {
 
     private MyImagesDAO mMyImagesDAO;
     private LiveData<List<MyImages>> mImagesList;
+
+    //Executors
+    ExecutorService mExecutorService = Executors.newSingleThreadExecutor();
 
     public MyImagesRepository(Application application) {
         MyImagesDatabase database = MyImagesDatabase.getInstance(application);
@@ -23,24 +29,46 @@ public class MyImagesRepository {
     }
 
     public void insert(MyImages myImages) {
-        new InsertImageAsyncTask(mMyImagesDAO).execute(myImages);
+//        new InsertImageAsyncTask(mMyImagesDAO).execute(myImages);
+
+        mExecutorService.execute(new Runnable() {
+            @Override
+            public void run() {
+                mMyImagesDAO.insert(myImages);
+            }
+        });
 
     }
 
     public void delete(MyImages myImages) {
-        new DeleteImageAsyncTask(mMyImagesDAO).execute(myImages);
+//        new DeleteImageAsyncTask(mMyImagesDAO).execute(myImages);
+        mExecutorService.execute(new Runnable() {
+            @Override
+            public void run() {
+                mMyImagesDAO.delete(myImages);
+            }
+        });
 
     }
 
     public void update(MyImages myImages) {
-        new UpdateImageAsyncTask(mMyImagesDAO).execute(myImages);
+//        new UpdateImageAsyncTask(mMyImagesDAO).execute(myImages);
+        mExecutorService.execute(new Runnable() {
+            @Override
+            public void run() {
+                mMyImagesDAO.update(myImages);
+            }
+        });
     }
 
     public LiveData<List<MyImages>> getAllImages() {
         return mImagesList;
     }
 
-    private static class InsertImageAsyncTask extends AsyncTask<MyImages, Void, Void> {
+   /*
+
+   //deprecated method
+   private static class InsertImageAsyncTask extends AsyncTask<MyImages, Void, Void> {
 
         MyImagesDAO mMyImagesDAO;
 
@@ -82,6 +110,6 @@ public class MyImagesRepository {
             mMyImagesDAO.update(myImages[0]);
             return null;
         }
-    }
+    }*/
 
 }

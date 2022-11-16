@@ -1,6 +1,7 @@
 package com.example.myphotoalbum.database;
 
 
+//import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -10,10 +11,13 @@ import java.sql.Blob;
 public class MyImages {
 
     @PrimaryKey(autoGenerate = true)
+//    @ColumnInfo(name = "image_id")
     public int image_id;
 
+//    @ColumnInfo(name = "image_title")
     public String image_title;
 
+//    @ColumnInfo(name = "image_description")
     public String image_description;
 
     public byte[] image;
