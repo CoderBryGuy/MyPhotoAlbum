@@ -17,7 +17,9 @@ public interface MyImagesDAO {
     @Update
     void update(MyImages myImages);
 
+
     @Query("SELECT * FROM my_images ORDER BY image_id ASC")
-    LiveData<List<MyImages>> getAllImages();
+
+    public abstract LiveData<List<MyImages>> getAllImages();
 
 }

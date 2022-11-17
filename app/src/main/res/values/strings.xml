@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">MyPhotoAlbum</string>
+    <string name="description">description</string>
+    <string name="title">title</string>
+    <string name="add_title">add title</string>
+    <string name="add_description">add description</string>
+    <string name="save">save</string>
+    <string name="update">update</string>
 </resources>

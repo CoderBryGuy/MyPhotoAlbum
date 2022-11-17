@@ -3,7 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Bryan/IdeaProjects/MyPhotoAlbum/app/src/main/res/layout/activity_add_imagine.xml" value="0.22719374456993918" />
         <entry key="..\:/Users/Bryan/IdeaProjects/MyPhotoAlbum/app/src/main/res/layout/activity_main.xml" value="0.32447916666666665" />
+        <entry key="..\:/Users/Bryan/IdeaProjects/MyPhotoAlbum/app/src/main/res/layout/activity_update_image.xml" value="0.21240942028985507" />
         <entry key="..\:/Users/Bryan/IdeaProjects/MyPhotoAlbum/app/src/main/res/layout/image_card.xml" value="0.5" />
       </map>
     </option>
