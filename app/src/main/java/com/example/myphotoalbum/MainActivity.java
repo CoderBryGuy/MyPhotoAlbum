@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.myphotoalbum.database.MyImages;
 import com.example.myphotoalbum.viewmodel.MyImagesViewModel;
@@ -27,6 +28,10 @@ public class MainActivity extends AppCompatActivity {
         mFab = findViewById(R.id.fab_main_vw);
         mRecyclerView = findViewById(R.id.recyclerView_main_vw);
 
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        MyImagesAdapter mAdapter = new MyImagesAdapter();
+        mRecyclerView.setAdapter(mAdapter);
+
         mMyImagesViewModel = new ViewModelProvider
                 .AndroidViewModelFactory(getApplication())
                 .create(MyImagesViewModel.class);
@@ -34,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         mMyImagesViewModel.getAllImages().observe(MainActivity.this, new Observer<List<MyImages>>() {
             @Override
             public void onChanged(List<MyImages> myImages) {
-
+                    mAdapter.setImagesList(myImages);
             }
         });
 
