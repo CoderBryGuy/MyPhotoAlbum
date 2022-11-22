@@ -44,6 +44,9 @@ public class MyImagesAdapter extends RecyclerView.Adapter<MyImagesAdapter.MyView
 //        holder.title.setText(myImage.getImage_title().toString());
 //        holder.description.setText(myImage.getImage_description().toString());
 
+        MyImages myImages = mImagesList.get(position);
+        //todo continue here
+
 
     }
 

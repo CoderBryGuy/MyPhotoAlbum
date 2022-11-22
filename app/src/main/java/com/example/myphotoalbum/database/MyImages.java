@@ -2,6 +2,7 @@ package com.example.myphotoalbum.database;
 
 
 //import androidx.room.ColumnInfo;
+
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -14,16 +15,16 @@ public class MyImages {
 //    @ColumnInfo(name = "image_id")
     public int image_id;
 
-//    @ColumnInfo(name = "image_title")
+    //    @ColumnInfo(name = "image_title")
     public String image_title;
 
-//    @ColumnInfo(name = "image_description")
+    //    @ColumnInfo(name = "image_description")
     public String image_description;
 
     public byte[] image;
 
-    public MyImages(int image_id, String image_title, String image_description, byte[] image) {
-        this.image_id = image_id;
+    public MyImages(String image_title, String image_description, byte[] image) {
+
         this.image_title = image_title;
         this.image_description = image_description;
         this.image = image;
