@@ -1,5 +1,7 @@
 package com.example.myphotoalbum;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +21,9 @@ public class MyImagesAdapter extends RecyclerView.Adapter<MyImagesAdapter.MyView
     List<MyImages> mImagesList = new ArrayList();
 
 
+    public MyImages getPosition(int position){
+        return mImagesList.get(position);
+    }
 
     @NonNull
     @NotNull
@@ -32,7 +37,7 @@ public class MyImagesAdapter extends RecyclerView.Adapter<MyImagesAdapter.MyView
         return new MyViewHolder(view);
     }
 
-    public void setImagesList(List<MyImages> imagesList) {
+    public void  setImagesList(List<MyImages> imagesList) {
         mImagesList = imagesList;
         notifyDataSetChanged();
     }
@@ -45,7 +50,13 @@ public class MyImagesAdapter extends RecyclerView.Adapter<MyImagesAdapter.MyView
 //        holder.description.setText(myImage.getImage_description().toString());
 
         MyImages myImages = mImagesList.get(position);
-        //todo continue here
+        holder.title.setText(myImages.getImage_title());
+        holder.description.setText(myImages.getImage_description());
+        holder.image.setImageBitmap(
+                BitmapFactory.decodeByteArray(
+                myImages.getImage(),
+                0, myImages.getImage().length));
+
 
 
     }

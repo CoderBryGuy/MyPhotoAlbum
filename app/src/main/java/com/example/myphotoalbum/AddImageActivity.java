@@ -124,6 +124,8 @@ public class AddImageActivity extends AppCompatActivity {
                         Intent data = result.getData();
 
                         if (resultCode == RESULT_OK && data != null) {
+
+
                             if (Build.VERSION.SDK_INT < 28) {
                                 try {
                                     selectedImage = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
@@ -148,6 +150,7 @@ public class AddImageActivity extends AppCompatActivity {
     }
 
     public Bitmap makeSmall(Bitmap image, int maxSize) {
+
         int width = selectedImage.getWidth();
         int height = selectedImage.getHeight();
 
