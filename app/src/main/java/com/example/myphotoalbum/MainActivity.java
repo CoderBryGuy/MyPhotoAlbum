@@ -1,7 +1,6 @@
 package com.example.myphotoalbum;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import androidx.activity.result.ActivityResult;
@@ -20,19 +19,29 @@ import com.example.myphotoalbum.viewmodel.MyImagesViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.ByteArrayOutputStream;
 import java.util.List;
+
+import static com.example.myphotoalbum.MainActivity.TagContracts.*;
 
 public class MainActivity extends AppCompatActivity {
 
-    final static String TITLE = "title", DESCRIPTION = "desc", IMAGE = "image";
+
+
+
+    class TagContracts{
+        final static String TITLE = "title", DESCRIPTION = "desc", IMAGE = "image";
+        final static String TITLE_UPDATE = "title_update", DESCRIPTION_UPDATE = "desc_update",
+                IMAGE_UPDATE = "image_update", ID_UPDATE = "id_update";
+
+    }
 
     private MyImagesViewModel mMyImages_ViewModel;
 
     private FloatingActionButton mFab;
     private RecyclerView mRecyclerView;
 
-    private ActivityResultLauncher<Intent> mIntentActivity_ResultLauncher_ForAddImage;
+    private ActivityResultLauncher<Intent> mIntentActivity_ResultLauncher_For_Add_Image;
+    private ActivityResultLauncher<Intent> mIntentActivity_ResultLauncher_For_Update_Image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
 
         //register activity
         registerActivityForAddImage();
+        registerActivityForUpdateImage();
+
 
         mFab = findViewById(R.id.fab_main_vw);
         mRecyclerView = findViewById(R.id.recyclerView_main_vw);
@@ -66,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(MainActivity.this, AddImageActivity.class);
                 //activityResultLauncher
-                mIntentActivity_ResultLauncher_ForAddImage.launch(intent);
+                mIntentActivity_ResultLauncher_For_Add_Image.launch(intent);
 
             }
         });
@@ -84,10 +95,48 @@ public class MainActivity extends AppCompatActivity {
 
             }
         }).attachToRecyclerView(mRecyclerView);
+
+        mAdapter.setListener(new MyImagesAdapter.OnImageClickListener() {
+            @Override
+            public void onImageClick(MyImages myImages) {
+                Intent intent = new Intent(MainActivity.this, UpdateImageActivity.class);
+                intent.putExtra(ID_UPDATE, myImages.getImage_id());
+                intent.putExtra(TITLE_UPDATE, myImages.getImage_title());
+                intent.putExtra(DESCRIPTION_UPDATE, myImages.getImage_description());
+                intent.putExtra(IMAGE_UPDATE, myImages.getImage());
+                //activity result launcher
+                mIntentActivity_ResultLauncher_For_Update_Image.launch(intent);
+
+
+            }
+        });
+    }
+
+    private void registerActivityForUpdateImage() {
+
+        mIntentActivity_ResultLauncher_For_Update_Image = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        int resultCode = result.getResultCode();
+                        Intent data = result.getData();
+                        if(resultCode == RESULT_OK && data != null){
+                            String title = data.getStringExtra(TITLE);
+                            String desc = data.getStringExtra(DESCRIPTION);
+                            byte[] image = data.getByteArrayExtra(IMAGE);
+
+                            MyImages myImages = new MyImages(title, desc, image);
+//                            mMyImages_ViewModel.insert(myImages);
+                            mMyImages_ViewModel.update(myImages);
+                        }
+                    }
+                }
+        );
     }
 
     public void registerActivityForAddImage() {
-        mIntentActivity_ResultLauncher_ForAddImage = registerForActivityResult(
+        mIntentActivity_ResultLauncher_For_Add_Image = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
                     @Override

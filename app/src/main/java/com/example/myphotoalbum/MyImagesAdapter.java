@@ -19,6 +19,15 @@ import java.util.List;
 public class MyImagesAdapter extends RecyclerView.Adapter<MyImagesAdapter.MyViewHolder> {
 
     List<MyImages> mImagesList = new ArrayList();
+    private OnImageClickListener listener;
+
+    public void setListener(OnImageClickListener listener) {
+        this.listener = listener;
+    }
+
+    public interface OnImageClickListener{
+        void onImageClick(MyImages myImages);
+    }
 
 
     public MyImages getPosition(int position){
@@ -76,6 +85,21 @@ public class MyImagesAdapter extends RecyclerView.Adapter<MyImagesAdapter.MyView
             image = itemView.findViewById(R.id.imageView_cardvw);
             title = itemView.findViewById(R.id.title_txvw_cardvw);
             description = itemView.findViewById(R.id.description_txvw_cardvw);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    int position = getAdapterPosition();
+
+                    if(listener != null && position != RecyclerView.NO_POSITION){
+                        listener.onImageClick(mImagesList.get(position));
+                    }
+
+                }
+            });
+
+
         }
     }
 }
