@@ -1,8 +1,6 @@
 package com.example.myphotoalbum;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.ImageDecoder;
@@ -17,12 +15,8 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -146,22 +140,29 @@ public class UpdateImageActivity extends AppCompatActivity {
     }
 
     public void updateData(){
-        if(selectedImage == null){
-            Toast.makeText(UpdateImageActivity.this, "Please select an image!", Toast.LENGTH_SHORT).show();
+
+        if(id == -1){
+            Toast.makeText(UpdateImageActivity.this, "There is a problem!", Toast.LENGTH_SHORT).show();
         }else {
 
             String title = mTitle.getText().toString();
             String description = mDesc.getText().toString();
-            //get bitmap
-            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            scaledImage = makeSmall(selectedImage, 300);
-            scaledImage.compress(Bitmap.CompressFormat.PNG, 50, outputStream);
-            byte[] image = outputStream.toByteArray();
-
             Intent intent = new Intent();
-            intent.putExtra(MainActivity.TagContracts.TITLE, title);
-            intent.putExtra(MainActivity.TagContracts.DESCRIPTION, description);
-            intent.putExtra(MainActivity.TagContracts.IMAGE, image);
+            intent.putExtra(MainActivity.TagContracts.ID_UPDATE, id);
+            intent.putExtra(MainActivity.TagContracts.TITLE_ADD, title);
+            intent.putExtra(MainActivity.TagContracts.DESCRIPTION_ADD, description);
+
+            if (selectedImage == null) {
+                intent.putExtra(MainActivity.TagContracts.IMAGE_ADD, image);
+            } else {
+                //get bitmap
+                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                scaledImage = makeSmall(selectedImage, 300);
+                scaledImage.compress(Bitmap.CompressFormat.PNG, 50, outputStream);
+                byte[] image = outputStream.toByteArray();
+                intent.putExtra(MainActivity.TagContracts.IMAGE_ADD, image);
+
+            }
             setResult(RESULT_OK, intent);
             finish();
         }

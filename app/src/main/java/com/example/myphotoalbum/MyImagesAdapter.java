@@ -21,13 +21,15 @@ public class MyImagesAdapter extends RecyclerView.Adapter<MyImagesAdapter.MyView
     List<MyImages> mImagesList = new ArrayList();
     private OnImageClickListener listener;
 
+    public interface OnImageClickListener{
+        void onImageClick(MyImages myImages);
+    }
+
+
     public void setListener(OnImageClickListener listener) {
         this.listener = listener;
     }
 
-    public interface OnImageClickListener{
-        void onImageClick(MyImages myImages);
-    }
 
 
     public MyImages getPosition(int position){

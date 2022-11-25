@@ -22,6 +22,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 import static com.example.myphotoalbum.MainActivity.TagContracts.*;
+import static com.example.myphotoalbum.MainActivity.TagContracts.TITLE_UPDATE;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     class TagContracts{
-        final static String TITLE = "title", DESCRIPTION = "desc", IMAGE = "image";
+        final static String TITLE_ADD = "title_add", DESCRIPTION_ADD = "desc_add", IMAGE_ADD = "image_add";
         final static String TITLE_UPDATE = "title_update", DESCRIPTION_UPDATE = "desc_update",
                 IMAGE_UPDATE = "image_update", ID_UPDATE = "id_update";
 
@@ -122,12 +123,14 @@ public class MainActivity extends AppCompatActivity {
                         int resultCode = result.getResultCode();
                         Intent data = result.getData();
                         if(resultCode == RESULT_OK && data != null){
-                            String title = data.getStringExtra(TITLE);
-                            String desc = data.getStringExtra(DESCRIPTION);
-                            byte[] image = data.getByteArrayExtra(IMAGE);
+                            String title = data.getStringExtra(TITLE_UPDATE);
+                            String desc = data.getStringExtra(DESCRIPTION_UPDATE);
+                            byte[] image = data.getByteArrayExtra(IMAGE_UPDATE);
+                            int id = data.getIntExtra(IMAGE_UPDATE, -1);
 
                             MyImages myImages = new MyImages(title, desc, image);
-//                            mMyImages_ViewModel.insert(myImages);
+                            myImages.setImage_id(id);
+
                             mMyImages_ViewModel.update(myImages);
                         }
                     }
@@ -145,9 +148,9 @@ public class MainActivity extends AppCompatActivity {
                         Intent data = result.getData();
 
                         if (resultCode == RESULT_OK && data != null) {
-                            String title = data.getStringExtra(TITLE);
-                            String desc = data.getStringExtra(DESCRIPTION);
-                            byte[] image = data.getByteArrayExtra(IMAGE);
+                            String title = data.getStringExtra(TITLE_ADD);
+                            String desc = data.getStringExtra(DESCRIPTION_ADD);
+                            byte[] image = data.getByteArrayExtra(IMAGE_ADD);
 
                             MyImages myImages = new MyImages(title, desc, image);
                             mMyImages_ViewModel.insert(myImages);

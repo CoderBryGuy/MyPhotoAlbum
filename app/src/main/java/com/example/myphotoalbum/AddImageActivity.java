@@ -25,8 +25,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Arrays;
-import com.example.myphotoalbum.MainActivity.TagContracts.*;
 
 public class AddImageActivity extends AppCompatActivity {
 
@@ -74,9 +72,9 @@ public class AddImageActivity extends AppCompatActivity {
                     byte[] image = outputStream.toByteArray();
 
                     Intent intent = new Intent();
-                    intent.putExtra(MainActivity.TagContracts.TITLE, title);
-                    intent.putExtra(MainActivity.TagContracts.DESCRIPTION, description);
-                    intent.putExtra(MainActivity.TagContracts.IMAGE, image);
+                    intent.putExtra(MainActivity.TagContracts.TITLE_ADD, title);
+                    intent.putExtra(MainActivity.TagContracts.DESCRIPTION_ADD, description);
+                    intent.putExtra(MainActivity.TagContracts.IMAGE_ADD, image);
                     setResult(RESULT_OK, intent);
                     finish();
                 }
